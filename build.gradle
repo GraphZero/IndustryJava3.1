@@ -1,0 +1,36 @@
+group 'andrew'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+jar {
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+dependencies {
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+
+    compile project(":Tools")
+    compile group: 'com.internal', name: 'Tools', version: '1.0-SNAPSHOT'
+    compile project(":Payments")
+    compile group: 'com.external', name: 'Payments', version: '1.0-SNAPSHOT'
+
+    compile group: 'org.slf4j', name: 'log4j-over-slf4j', version: '1.7.25'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-to-slf4j', version: '2.10.0'
+
+    // https://mvnrepository.com/artifact/commons-cli/commons-cli
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.4'
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+configurations.compile.transitive = false

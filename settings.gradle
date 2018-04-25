@@ -1,0 +1,6 @@
+rootProject.name = 'I.J.3.1'
+
+include ":Payments"
+project(":Payments").projectDir = file("Payments")
+include ":Tools"
+project(":Tools").projectDir = file("Tools")
