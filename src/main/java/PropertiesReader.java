@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Properties;
 
 public class PropertiesReader {
@@ -38,10 +39,16 @@ public class PropertiesReader {
     }
 
     private void getClientProperties(){
-        clientId =  Integer.parseInt(appProps.getProperty("ticketPrice"));
-        ourId = Integer.parseInt(appProps.getProperty("clientAge"));
-        clientAge = Integer.parseInt(appProps.getProperty("clientId"));
-        ticketPrice = BigDecimal.valueOf(Double.parseDouble(appProps.getProperty("ourId")));
+        try{
+            clientId =  Integer.parseInt(appProps.getProperty("ticketPrice"));
+            ourId = Integer.parseInt(appProps.getProperty("clientAge"));
+            clientAge = Integer.parseInt(appProps.getProperty("clientId"));
+            ticketPrice = BigDecimal.valueOf(Double.parseDouble(appProps.getProperty("ourId")));
+        } catch(NumberFormatException p){
+            logger.error("Couldn't parse numbers...");
+            isFileFound = false;
+        }
+
     }
 
     public int getClientId() {
